@@ -53,16 +53,14 @@ with DAG(
         python_callable=obtener_y_guardar_api
     )
 
-    # 2️⃣ Monitorear archivos Excel en la carpeta de ORIGEN
     sensor_archivo = FileSensor(
         task_id="monitorear_archivo_xlsx",
-        filepath=os.path.join(CARPETA_ORIGEN, "*.xlsx"),  # Se ajusta para Windows
+        filepath=os.path.join(CARPETA_ORIGEN, "*.xlsx"),  
         poke_interval=30,  
         timeout=600,  
         mode="poke"
     )
 
-    # 3️⃣ Procesar TODOS los archivos Excel en la carpeta ORIGEN
     def procesar_excel(**kwargs):
         archivos = [f for f in os.listdir(CARPETA_ORIGEN) if f.endswith(".xlsx")]
         if not archivos:
